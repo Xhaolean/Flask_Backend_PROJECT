@@ -24,7 +24,7 @@ This open-source project demonstrates how to connect front-end applications—sp
 * **Client-Side Validation:** JavaScript payload sanitization and keyword blocking.
 
 ## 🚀 Download App
-You can download the pre-compiled APK directly from our [GitHub Releases](https://github.com/yourusername/your-repo-name/releases/latest) page.
+You can download the pre-compiled APK directly from our [GitHub Releases](https://github.com/Xhaolean/Flask_Backend_PROJECT/releases/tag/Feedback) page.
 
 ## Tech Stack
 * **Backend:** Python, Flask, Flask-CORS, pytz, Werkzeug
