@@ -69,17 +69,13 @@ The Flask backend exposes the following REST endpoints:
 1. Clone the repository:
    ```
    git clone [https://github.com/yourusername/your-repo-name.git](https://github.com/yourusername/your-repo-name.git)
-
 2. Navigate to the project directory:
    ```
    cd your-repo-name
-
 3. Install Dependencies 
    ```
    pip install Flask Flask-Cors pytz Werkzeug
-   
 4. Run the Flask Server
    ```
    python app.py
-   
 The server will start on http://0.0.0.0:5000/.
