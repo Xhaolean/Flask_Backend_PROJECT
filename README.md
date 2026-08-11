@@ -1,7 +1,19 @@
 # Android & Web to Flask Backend Integration
 
+![Android](https://img.shields.io/badge/Platform-Android-green?style=flat&logo=android)
+![Python](https://img.shields.io/badge/Backend-Flask-blue?style=flat&logo=flask)
+[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/yourusername/your-repo-name/releases/latest)
+
 ## About The Project
 This open-source project demonstrates how to connect front-end applications—specifically an Android app built with Kotlin and a standard HTML/JS website—to a Python backend. It is designed to help beginners understand how backend REST APIs work, how to handle different types of HTTP requests, and how to process and save data on a server.
+
+## 📱 Screenshots & Previews
+
+| Web Interface | Mobile App (Kotlin) |
+| :---: | :---: |
+| <img src="assets/web_preview.png" width="500" alt="Web Version"/> | <img src="assets/app_preview.png" width="250" alt="App Version"/> |
+
+---
 
 ### Features
 * **Cross-Platform Support:** Accepts data from both Android (Kotlin) and Web (HTML/JS) clients.
@@ -10,6 +22,9 @@ This open-source project demonstrates how to connect front-end applications—sp
   * `multipart/form-data` (Standard Android upload)
   * `Base64` encoded strings (Web Canvas upload)
 * **Client-Side Validation:** JavaScript payload sanitization and keyword blocking.
+
+## 🚀 Download App
+You can download the pre-compiled APK directly from our [GitHub Releases](https://github.com/yourusername/your-repo-name/releases/latest) page.
 
 ## Tech Stack
 * **Backend:** Python, Flask, Flask-CORS, pytz, Werkzeug
@@ -51,5 +66,20 @@ The Flask backend exposes the following REST endpoints:
 * pip
 
 ### Running the Backend Locally
-   ```bash
+1. Clone the repository:
+   ```
    git clone [https://github.com/yourusername/your-repo-name.git](https://github.com/yourusername/your-repo-name.git)
+
+2. Navigate to the project directory:
+   ```
+   cd your-repo-name
+
+3. Install Dependencies 
+   ```
+   pip install Flask Flask-Cors pytz Werkzeug
+   
+4. Run the Flask Server
+   ```
+   python app.py
+   
+The server will start on http://0.0.0.0:5000/.
