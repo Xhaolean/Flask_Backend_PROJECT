@@ -68,7 +68,7 @@ The Flask backend exposes the following REST endpoints:
 ### Running the Backend Locally
 1. Clone the repository:
    ```
-   git clone [https://github.com/yourusername/your-repo-name.git](https://github.com/yourusername/your-repo-name.git)
+   git clone https://github.com/Xhaolean/Flask_backend_PROJECT.git
 2. Navigate to the project directory:
    ```
    cd your-repo-name
