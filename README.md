@@ -1,8 +1,8 @@
-# Android & Web to Flask Backend Integration
+# Android & Web to Flask Backend Integration (ExpressIt)
 
 ![Android](https://img.shields.io/badge/Platform-Android-green?style=flat&logo=android)
 ![Python](https://img.shields.io/badge/Backend-Flask-blue?style=flat&logo=flask)
-[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/yourusername/your-repo-name/releases/latest)
+[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/Xhaolean/Flask_Backend_PROJECT/releases/tag/Feedback)
 
 ## About The Project
 This open-source project demonstrates how to connect front-end applications—specifically an Android app built with Kotlin and a standard HTML/JS website—to a Python backend. It is designed to help beginners understand how backend REST APIs work, how to handle different types of HTTP requests, and how to process and save data on a server.
@@ -23,8 +23,10 @@ This open-source project demonstrates how to connect front-end applications—sp
   * `Base64` encoded strings (Web Canvas upload)
 * **Client-Side Validation:** JavaScript payload sanitization and keyword blocking.
 
-## 🚀 Download App
+## 🚀 Download App or visit site
 You can download the pre-compiled APK directly from our [GitHub Releases](https://github.com/Xhaolean/Flask_Backend_PROJECT/releases/tag/Feedback) page.
+
+OR visit this link to see it working [Express Yourself](https://https://aleznaor.pythonanywhere.com/) 
 
 ## Tech Stack
 * **Backend:** Python, Flask, Flask-CORS, pytz, Werkzeug
@@ -58,6 +60,9 @@ The Flask backend exposes the following REST endpoints:
 * **Method:** `POST`
 * **Payload:** `multipart/form-data` (File)
 * **Description:** Securely saves an uploaded image file from the mobile app to the `/images` directory.
+
+# Output Directory
+
 
 ## Setup & Installation
 
