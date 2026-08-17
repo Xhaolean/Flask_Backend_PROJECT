@@ -71,7 +71,7 @@ The Flask backend exposes the following REST endpoints:
    git clone https://github.com/Xhaolean/Flask_backend_PROJECT.git
 2. Navigate to the project directory:
    ```
-   cd your-repo-name
+   cd Xhaolean/Flask_backend_PROJECT
 3. Install Dependencies 
    ```
    pip install Flask Flask-Cors pytz Werkzeug
