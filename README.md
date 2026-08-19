@@ -7,13 +7,17 @@
 ## About The Project
 This open-source project demonstrates how to connect front-end applications—specifically an Android app built with Kotlin and a standard HTML/JS website—to a Python backend. It is designed to help beginners understand how backend REST APIs work, how to handle different types of HTTP requests, and how to process and save data on a server.
 
-## 📱 Screenshots & Previews
+---
 
-| Web Interface | Mobile App (Kotlin) |
-| :---: | :---: |
-| <img src="assets/expressPCPCPC.png" width="500" alt="Web Version"/> | <img src="assets/express.jpg" width="250" alt="App Version"/> |
+### Web Interface
+
+<img src="assets/expressPCPCPC.png" width="500" alt="Web Version"/> | <img src="assets/express.jpg" width="250" alt="App Version"/>
 
 ---
+
+### App Interface
+<img width="1080" height="1817" alt="expresss" src="https://github.com/user-attachments/assets/c643b244-0d1c-4b10-9b05-844afacf9a39" />
+
 
 ### Features
 * **Cross-Platform Support:** Accepts data from both Android (Kotlin) and Web (HTML/JS) clients.
