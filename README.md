@@ -11,7 +11,7 @@ This open-source project demonstrates how to connect front-end applications—sp
 
 | Web Interface | Mobile App (Kotlin) |
 | :---: | :---: |
-| <img src="assets/web_preview.png" width="500" alt="Web Version"/> | <img src="assets/app_preview.png" width="250" alt="App Version"/> |
+| <img src="assets/expressPCPCPC.png" width="500" alt="Web Version"/> | <img src="assets/express.jpg" width="250" alt="App Version"/> |
 
 ---
 
